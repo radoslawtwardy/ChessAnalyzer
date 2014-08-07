@@ -7,13 +7,12 @@ import chessanalyzer.model.board.ChessBoardIndex
  */
 sealed trait ChessFigure {
   /**
-   * Calculate which pieces are threatened if figure will stay on input piece
-   * @param figureIndex Coordination of figure for which we checked
-   * @param m max horizontal size of threatening possibility (for ex. horizontal size chess board)
-   * @param n max vertical size of threatening possibility (for ex. vertical size chess board)
+   * Check if current figure threatening other figure
+   * @param actualFigureIndex Coordination of figure for which we checked
+   * @param enemyFigureIndex  Coordination of figure for which is possible threatened by current figure
    * @return threatened indexes of pieces of chess board for current figure
    */
-  def threatenedPieces(figureIndex: ChessBoardIndex, m: Int, n: Int): Set[ChessBoardIndex]
+  def isThreatening(actualFigureIndex: ChessBoardIndex, enemyFigureIndex: ChessBoardIndex): Boolean
 }
 
 /**
@@ -22,18 +21,18 @@ sealed trait ChessFigure {
  */
 object ChessFigure {
   case object Bishop extends ChessFigure {
-    def threatenedPieces(figureIndex: ChessBoardIndex, m: Int, n: Int): Set[ChessBoardIndex] = ???
+    def isThreatening(actualFigureIndex: ChessBoardIndex, enemyFigureIndex: ChessBoardIndex): Boolean = ???
   }
 
   case object King extends ChessFigure {
-    def threatenedPieces(figureIndex: ChessBoardIndex, m: Int, n: Int): Set[ChessBoardIndex] = ???
+    def isThreatening(actualFigureIndex: ChessBoardIndex, enemyFigureIndex: ChessBoardIndex): Boolean = ???
   }
 
   case object Knight extends ChessFigure {
-    def threatenedPieces(figureIndex: ChessBoardIndex, m: Int, n: Int): Set[ChessBoardIndex] = ???
+    def isThreatening(actualFigureIndex: ChessBoardIndex, enemyFigureIndex: ChessBoardIndex): Boolean = ???
   }
 
   case object Queen extends ChessFigure {
-    def threatenedPieces(figureIndex: ChessBoardIndex, m: Int, n: Int): Set[ChessBoardIndex] = ???
+    def isThreatening(actualFigureIndex: ChessBoardIndex, enemyFigureIndex: ChessBoardIndex): Boolean = ???
   }
 }
