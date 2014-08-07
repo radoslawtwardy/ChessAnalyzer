@@ -35,4 +35,8 @@ object ChessFigure {
   case object Queen extends ChessFigure {
     def isThreatening(actualFigureIndex: ChessBoardIndex, enemyFigureIndex: ChessBoardIndex): Boolean = ???
   }
+
+  case object Rook extends ChessFigure {
+    def isThreatening(actualFigureIndex: ChessBoardIndex, enemyFigureIndex: ChessBoardIndex): Boolean = ???
+  }
 }
