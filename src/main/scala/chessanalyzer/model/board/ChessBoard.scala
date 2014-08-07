@@ -9,6 +9,9 @@ package chessanalyzer.model.board
  */
 case class ChessBoard(m: Int, n: Int, pieces: Map[ChessBoardIndex, ChessBoardPiece]) {
 
+  require(m > 0 && n > 0, "the smallest size of chessboard is 1 x 1")
+  require(pieces.size == m * n, "size of chessboard must be agreed with quantity of pieces")
+
   /**
    * Check if input piece is threatened by any piece (figure).
    * @param otherPiece Index of piece for which we checked
