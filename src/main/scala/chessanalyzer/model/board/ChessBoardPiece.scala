@@ -17,6 +17,6 @@ case class ChessBoardPiece(index: ChessBoardIndex, actualFigure: Option[ChessFig
    * @param otherPiece Index of piece for which we checked
    * @return if figure staying on current piece threatening input piece of chessboard
    */
-  def isThreateningPiece(otherPiece: ChessBoardIndex) = ???
+  def isThreateningPiece(otherPiece: ChessBoardIndex): Boolean = ???
 
 }

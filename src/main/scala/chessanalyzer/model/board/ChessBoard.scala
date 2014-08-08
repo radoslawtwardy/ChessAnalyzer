@@ -17,6 +17,6 @@ case class ChessBoard(m: Int, n: Int, pieces: Map[ChessBoardIndex, ChessBoardPie
    * @param otherPiece Index of piece for which we checked
    * @return if input piece of chessboard is threatened by any piece (figure).
    */
-  def isThreateningPiece(otherPiece: ChessBoardIndex) = ???
+  def isThreateningPiece(otherPiece: ChessBoardIndex): Boolean = ???
 
 }
