@@ -111,12 +111,11 @@ class ChessFigureTest extends FlatSpec with Matchers {
 
     Rook.isThreatening(position, ChessBoardIndex(1, 1)) should be (false)
     Rook.isThreatening(position, ChessBoardIndex(2, 2)) should be (false)
-    Rook.isThreatening(position, ChessBoardIndex(3, 3)) should be (false)
     Rook.isThreatening(position, ChessBoardIndex(2, 3)) should be (false)
     Rook.isThreatening(position, ChessBoardIndex(4, 3)) should be (false)
     Rook.isThreatening(position, ChessBoardIndex(4, 3)) should be (false)
     Rook.isThreatening(position, ChessBoardIndex(4, 5)) should be (false)
-    Rook.isThreatening(position, ChessBoardIndex(3, 101)) should be (false)
+    Rook.isThreatening(position, ChessBoardIndex(5, 99)) should be (false)
   }
 
   "Queen" should " threatens figure which stay opposite to it or diagonally to it" in {
@@ -140,7 +139,6 @@ class ChessFigureTest extends FlatSpec with Matchers {
     Queen.isThreatening(position, ChessBoardIndex(3, 2)) should be (true)
     Queen.isThreatening(position, ChessBoardIndex(3, 4)) should be (true)
     Queen.isThreatening(position, ChessBoardIndex(3, 5)) should be (true)
-    Queen.isThreatening(position, ChessBoardIndex(3, 3)) should be (false)
   }
 
   it should " not threatens figure which not stay opposite to it and not stay diagonally to it" in {

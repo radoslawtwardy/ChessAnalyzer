@@ -12,7 +12,7 @@ import scala.Some
 class ChessBoardPieceTest extends FlatSpec with Matchers {
 
   "Chess board piece" should "threatens other piece if some figure standing in this piece and this figure threatens other piece" in {
-    def piece(figure: ChessFigure) = ChessBoardPiece(ChessBoardIndex(3,3), Some(figure), Set.empty)
+    def piece(figure: ChessFigure) = ChessBoardPiece(ChessBoardIndex(3,3), Some(figure))
 
     piece(King).isThreateningPiece(ChessBoardIndex(4, 3)) should be (true)
     piece(Knight).isThreateningPiece(ChessBoardIndex(4, 5)) should be (true)
@@ -22,7 +22,7 @@ class ChessBoardPieceTest extends FlatSpec with Matchers {
   }
 
   it should "not threatens other piece if some figure standing in this piece and this figure not threatens other piece" in {
-    def piece(figure: ChessFigure) = ChessBoardPiece(ChessBoardIndex(3,3), Some(figure), Set.empty)
+    def piece(figure: ChessFigure) = ChessBoardPiece(ChessBoardIndex(3,3), Some(figure))
 
     piece(King).isThreateningPiece(ChessBoardIndex(1, 5)) should be (false)
     piece(Knight).isThreateningPiece(ChessBoardIndex(3, 2)) should be (false)
@@ -32,7 +32,7 @@ class ChessBoardPieceTest extends FlatSpec with Matchers {
   }
 
   it should "not threatens other piece if any figure standing in this piece" in {
-    val piece = ChessBoardPiece(ChessBoardIndex(3,3), None, Set.empty)
+    val piece = ChessBoardPiece(ChessBoardIndex(3,3), None)
 
     piece.isThreateningPiece(ChessBoardIndex(4, 3)) should be (false)
     piece.isThreateningPiece(ChessBoardIndex(4, 5)) should be (false)

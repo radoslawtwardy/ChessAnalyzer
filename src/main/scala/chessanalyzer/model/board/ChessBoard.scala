@@ -13,10 +13,34 @@ case class ChessBoard(m: Int, n: Int, pieces: Map[ChessBoardIndex, ChessBoardPie
   require(pieces.size == m * n, "size of chessboard must be agreed with quantity of pieces")
 
   /**
-   * Check if input piece is threatened by any piece (figure).
-   * @param otherPiece Index of piece for which we checked
-   * @return if input piece of chessboard is threatened by any piece (figure).
+   * Check if board is allowed.
+   * It means that any figure on board not threatening figure standing on input index and input figure not threatening ant figure on board.
+   * @param pieceToCheck Piece for which we checked
+   * @return if board is allowed.
    */
-  def isThreateningPiece(otherPiece: ChessBoardIndex): Boolean = ???
+  def boardAllowed(pieceToCheck: ChessBoardPiece): Boolean = {
+    pieces.forall {
+      case (index, piece) =>
+         piece.actualFigure.isEmpty || pieceToCheck.actualFigure.isEmpty || // if on of compared pieces is empty then is ok
+          !piece.isThreateningPiece(pieceToCheck.index) && !pieceToCheck.isThreateningPiece(index) // or if two pieces are not threatening itself then is ok
+    }
+  }
+}
 
+object ChessBoard {
+
+  /**
+   * Create empty chess board
+   * @param m horizontal size of chess board
+   * @param n vertical size of chess board
+   * @return empty chess board
+   */
+  def apply(m: Int, n: Int): ChessBoard = {
+    val indexes = for {
+      i <- 1 to m
+      j <- 1 to n
+    } yield ChessBoardIndex(i, j)
+
+    ChessBoard(m, n, indexes.map(ind => ind -> ChessBoardPiece(ind, None))(scala.collection.breakOut))
+  }
 }
