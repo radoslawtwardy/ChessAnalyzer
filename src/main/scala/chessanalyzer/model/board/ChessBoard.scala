@@ -14,7 +14,7 @@ case class ChessBoard(m: Int, n: Int, pieces: Map[ChessBoardIndex, ChessBoardPie
 
   /**
    * Check if board is allowed.
-   * It means that any figure on board not threatening figure standing on input index and input figure not threatening ant figure on board.
+   * It means that any chessanalyzer.figure on board not threatening chessanalyzer.figure standing on input index and input chessanalyzer.figure not threatening ant chessanalyzer.figure on board.
    * @param pieceToCheck Piece for which we checked
    * @return if board is allowed.
    */

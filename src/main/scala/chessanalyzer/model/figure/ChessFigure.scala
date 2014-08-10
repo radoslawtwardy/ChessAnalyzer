@@ -4,20 +4,20 @@ import chessanalyzer.model.board.ChessBoardIndex
 import scala.math.abs
 
 /**
- * Describes abstract chess figure
+ * Describes abstract chess chessanalyzer.figure
  */
 sealed trait ChessFigure {
   /**
-   * Check if current figure threatening other figure
-   * @param actualFigureIndex Coordination of figure for which we checked
-   * @param enemyFigureIndex  Coordination of figure for which is possible threatened by current figure
-   * @return threatened indexes of pieces of chess board for current figure
+   * Check if current chessanalyzer.figure threatening other chessanalyzer.figure
+   * @param actualFigureIndex Coordination of chessanalyzer.figure for which we checked
+   * @param enemyFigureIndex  Coordination of chessanalyzer.figure for which is possible threatened by current chessanalyzer.figure
+   * @return threatened indexes of pieces of chess board for current chessanalyzer.figure
    */
   def isThreatening(actualFigureIndex: ChessBoardIndex, enemyFigureIndex: ChessBoardIndex): Boolean
 }
 
 /**
- * Figure have only some universal properties so we don't create instance of figure.
+ * Figure have only some universal properties so we don't create instance of chessanalyzer.figure.
  * Properties like coordinates etc contains [[chessanalyzer.model.board.ChessBoardPiece]]
  */
 object ChessFigure {

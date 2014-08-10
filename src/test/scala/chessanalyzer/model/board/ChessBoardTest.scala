@@ -9,23 +9,23 @@ import chessanalyzer.model.figure.ChessFigure._
 */
 class ChessBoardTest extends FlatSpec with Matchers {
 
-  "Chess board" should "be not allowed, because some figure from board is threatening tested piece (chess board layout 1)" in {
+  "Chess board" should "be not allowed, because some chessanalyzer.figure from board is threatening tested piece (chess board layout 1)" in {
     board1.boardAllowed(ChessBoardPiece(ChessBoardIndex(1, 2), Some(King))) should be(false)
     board1.boardAllowed(ChessBoardPiece(ChessBoardIndex(2, 2), Some(King))) should be(false)
     board1.boardAllowed(ChessBoardPiece(ChessBoardIndex(2, 3), Some(King))) should be(false)
   }
 
-  it should "be not allowed, because tested figure is threatening some figure on board  (chess board layout 1)" in {
+  it should "be not allowed, because tested chessanalyzer.figure is threatening some chessanalyzer.figure on board  (chess board layout 1)" in {
     board1.boardAllowed(ChessBoardPiece(ChessBoardIndex(2, 1), Some(Knight))) should be(false)
     board1.boardAllowed(ChessBoardPiece(ChessBoardIndex(3, 2), Some(Queen))) should be(false)
   }
 
-  it should "be allowed, because any figure from board is threatening tested piece and this piece is not threatening any figure from board (chess board layout 1)" in {
+  it should "be allowed, because any chessanalyzer.figure from board is threatening tested piece and this piece is not threatening any chessanalyzer.figure from board (chess board layout 1)" in {
     board1.boardAllowed(ChessBoardPiece(ChessBoardIndex(1, 1), Some(Bishop))) should be(true)
     board1.boardAllowed(ChessBoardPiece(ChessBoardIndex(3, 3), Some(Knight))) should be(true)
   }
 
-  "Chess board" should "be not allowed, because some figure from board is threatening tested piece (chess board layout 2)" in {
+  "Chess board" should "be not allowed, because some chessanalyzer.figure from board is threatening tested piece (chess board layout 2)" in {
     board2.boardAllowed(ChessBoardPiece(ChessBoardIndex(1, 2), Some(King))) should be (false)
     board2.boardAllowed(ChessBoardPiece(ChessBoardIndex(1, 3), Some(King))) should be (false)
     board2.boardAllowed(ChessBoardPiece(ChessBoardIndex(1, 4), Some(King))) should be (false)
@@ -46,11 +46,11 @@ class ChessBoardTest extends FlatSpec with Matchers {
     board2.boardAllowed(ChessBoardPiece(ChessBoardIndex(5, 3), Some(King))) should be (false)
   }
 
-  it should "be not allowed, because tested figure is threatening some figure on board  (chess board layout 2)" in {
+  it should "be not allowed, because tested chessanalyzer.figure is threatening some chessanalyzer.figure on board  (chess board layout 2)" in {
     board2.boardAllowed(ChessBoardPiece(ChessBoardIndex(5, 4), Some(King))) should be (false)
   }
 
-  it should "be allowed, because any figure from board is threatening tested piece and this piece is not threatening any figure from board (chess board layout 2)" in {
+  it should "be allowed, because any chessanalyzer.figure from board is threatening tested piece and this piece is not threatening any chessanalyzer.figure from board (chess board layout 2)" in {
     board2.boardAllowed(ChessBoardPiece(ChessBoardIndex(2, 3), Some(Bishop))) should be (true)
     board2.boardAllowed(ChessBoardPiece(ChessBoardIndex(3, 5), Some(Knight))) should be (true)
   }

@@ -1,4 +1,4 @@
-package figure
+package chessanalyzer.figure
 
 import org.scalatest.{Matchers, FlatSpec}
 import chessanalyzer.model.figure.ChessFigure._
@@ -6,7 +6,7 @@ import chessanalyzer.model.board.ChessBoardIndex
 
 /**
  * Tests suite to [[chessanalyzer.model.figure.ChessFigure]]
- * Checks possibility of existing some figure relative to the current without threatening
+ * Checks possibility of existing some chessanalyzer.figure relative to the current without threatening
  */
 class ChessFigureTest extends FlatSpec with Matchers {
 
@@ -24,7 +24,7 @@ class ChessFigureTest extends FlatSpec with Matchers {
     King.isThreatening(position, ChessBoardIndex(3, 3)) should be (true)
   }
 
-  it should " not threatens figure which not adjacent"
+  it should " not threatens chessanalyzer.figure which not adjacent"
 
   it should " not threatens figures not adjacent to it" in {
     val position = ChessBoardIndex(3, 3)
@@ -38,7 +38,7 @@ class ChessFigureTest extends FlatSpec with Matchers {
     King.isThreatening(position, ChessBoardIndex(99, 101)) should be (false)
   }
 
-  "Knight" should " threatens only figure in distance 2+1 or 1+2" in {
+  "Knight" should " threatens only chessanalyzer.figure in distance 2+1 or 1+2" in {
     val position = ChessBoardIndex(3, 3)
 
     Knight.isThreatening(position, ChessBoardIndex(1, 2)) should be (true)
@@ -53,7 +53,7 @@ class ChessFigureTest extends FlatSpec with Matchers {
   }
 
 
-  it should " not threatens figure which is have other distance then 2+1 or 1+2" in {
+  it should " not threatens chessanalyzer.figure which is have other distance then 2+1 or 1+2" in {
     val position = ChessBoardIndex(3, 3)
 
     Knight.isThreatening(position, ChessBoardIndex(1, 1)) should be (false)
@@ -66,7 +66,7 @@ class ChessFigureTest extends FlatSpec with Matchers {
     Knight.isThreatening(position, ChessBoardIndex(99, 101)) should be (false)
   }
 
-  "Bishop" should " threatens only figure which stay diagonally to it" in {
+  "Bishop" should " threatens only chessanalyzer.figure which stay diagonally to it" in {
     val position = ChessBoardIndex(3, 3)
 
     Bishop.isThreatening(position, ChessBoardIndex(1, 1)) should be (true)
@@ -81,7 +81,7 @@ class ChessFigureTest extends FlatSpec with Matchers {
     Bishop.isThreatening(position, ChessBoardIndex(3, 3)) should be (true)
   }
 
-  it should " not threatens figure which isn't stay diagonally to it" in {
+  it should " not threatens chessanalyzer.figure which isn't stay diagonally to it" in {
     val position = ChessBoardIndex(3, 3)
 
     Bishop.isThreatening(position, ChessBoardIndex(4, 3)) should be (false)
@@ -92,7 +92,7 @@ class ChessFigureTest extends FlatSpec with Matchers {
     Bishop.isThreatening(position, ChessBoardIndex(99, 100)) should be (false)
   }
 
-  "Rook" should " threatens figure which stay opposite to it" in {
+  "Rook" should " threatens chessanalyzer.figure which stay opposite to it" in {
     val position = ChessBoardIndex(3, 4)
 
     Rook.isThreatening(position, ChessBoardIndex(1, 4)) should be (true)
@@ -106,7 +106,7 @@ class ChessFigureTest extends FlatSpec with Matchers {
     Rook.isThreatening(position, ChessBoardIndex(3, 101)) should be (true)
   }
 
-  it should " not threatens figure which not stay opposite to it" in {
+  it should " not threatens chessanalyzer.figure which not stay opposite to it" in {
     val position = ChessBoardIndex(3, 4)
 
     Rook.isThreatening(position, ChessBoardIndex(1, 1)) should be (false)
@@ -118,7 +118,7 @@ class ChessFigureTest extends FlatSpec with Matchers {
     Rook.isThreatening(position, ChessBoardIndex(5, 99)) should be (false)
   }
 
-  "Queen" should " threatens figure which stay opposite to it or diagonally to it" in {
+  "Queen" should " threatens chessanalyzer.figure which stay opposite to it or diagonally to it" in {
     val position = ChessBoardIndex(3, 3)
 
     Queen.isThreatening(position, ChessBoardIndex(1, 1)) should be (true)
@@ -141,7 +141,7 @@ class ChessFigureTest extends FlatSpec with Matchers {
     Queen.isThreatening(position, ChessBoardIndex(3, 5)) should be (true)
   }
 
-  it should " not threatens figure which not stay opposite to it and not stay diagonally to it" in {
+  it should " not threatens chessanalyzer.figure which not stay opposite to it and not stay diagonally to it" in {
     val position = ChessBoardIndex(3, 3)
 
     Queen.isThreatening(position, ChessBoardIndex(1, 2)) should be (false)
