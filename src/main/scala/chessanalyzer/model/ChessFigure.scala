@@ -1,6 +1,5 @@
-package chessanalyzer.model.figure
+package chessanalyzer.model
 
-import chessanalyzer.model.board.ChessBoardIndex
 import scala.math.abs
 
 /**
@@ -18,7 +17,6 @@ sealed trait ChessFigure {
 
 /**
  * Figure have only some universal properties so we don't create instance of figure.
- * Properties like coordinates etc contains [[chessanalyzer.model.board.ChessBoardPiece]]
  */
 object ChessFigure {
   case object Bishop extends ChessFigure {

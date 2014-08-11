@@ -1,11 +1,10 @@
-package figure
+package chessanalyzer.model
 
 import org.scalatest.{Matchers, FlatSpec}
-import chessanalyzer.model.figure.ChessFigure._
-import chessanalyzer.model.board.ChessBoardIndex
+import ChessFigure._
 
 /**
- * Tests suite to [[chessanalyzer.model.figure.ChessFigure]]
+ * Tests suite to [[ChessFigure]]
  * Checks possibility of existing some figure relative to the current without threatening
  */
 class ChessFigureTest extends FlatSpec with Matchers {

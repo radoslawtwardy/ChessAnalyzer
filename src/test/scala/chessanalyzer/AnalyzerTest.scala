@@ -1,10 +1,8 @@
 package chessanalyzer
 
 import org.scalatest.{Matchers, FlatSpec}
-import chessanalyzer.model.figure.ChessFigure
-import chessanalyzer.model.figure.ChessFigure._
-import chessanalyzer.model.board.{ChessBoardPiece, ChessBoardIndex, ChessBoard}
-import scala.collection.SortedMap
+import chessanalyzer.model.{ChessBoardIndex, ChessBoard, ChessFigure}
+import ChessFigure._
 
 /**
  * Test suite to [[Analyzer]]
@@ -13,9 +11,8 @@ import scala.collection.SortedMap
 class AnalyzerTest extends FlatSpec with Matchers {
 
   "Possible chess board" should "be in the number of 1 if chess board size is 1x1, and stands of the chess board one figure" in {
-    implicit def ordering = new ChessBoard.IndexOrdering(1)
-    Analyzer.possibleSetups(1, 1, List(King)) should be (Set(ChessBoard(1,1, SortedMap(ChessBoardIndex(1,1) -> ChessBoardPiece(ChessBoardIndex(1,1), Some(King))))))
-    Analyzer.possibleSetups(1, 1, List(Queen)) should be (Set(ChessBoard(1,1, SortedMap(ChessBoardIndex(1,1) -> ChessBoardPiece(ChessBoardIndex(1,1), Some(Queen))))))
+    Analyzer.possibleSetups(1, 1, List(King)) should be (Set(ChessBoard.create(1,1, Map(ChessBoardIndex(1,1) -> King))))
+    Analyzer.possibleSetups(1, 1, List(Queen)) should be (Set(ChessBoard.create(1,1, Map(ChessBoardIndex(1,1) -> Queen))))
   }
 
   it should "be in the number of 0 if chess board size is 1x1, and stands of the chess board two figures" in {
@@ -176,9 +173,13 @@ class AnalyzerTest extends FlatSpec with Matchers {
       j <- 1 to n
     } yield {
       val ind = (i-1)*n + j - 1
-      ChessBoardIndex(i, j) -> ChessBoardPiece(ChessBoardIndex(i, j), figureInOrder(ind))
+      ChessBoardIndex(i, j) -> figureInOrder(ind)
     }
 
-    ChessBoard(m, n, SortedMap(tuples:_*))
+    val boardSetup = tuples.collect {
+      case (ind, Some(fig)) => ind -> fig
+    }
+
+    ChessBoard.create(m, n, boardSetup.toMap)
   }
 }
