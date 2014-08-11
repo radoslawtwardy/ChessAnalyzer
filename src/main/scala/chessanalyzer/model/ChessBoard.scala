@@ -71,7 +71,23 @@ object ChessBoard {
    * @param n vertical size of chess board
    * @param bondedPieces figures and theirs indexes (could be unsorted)
    */
-  def create(m: Int, n: Int, bondedPieces: Map[ChessBoardIndex, ChessFigure]) = {
+  def create(m: Int, n: Int, bondedPieces: Map[ChessBoardIndex, ChessFigure]): ChessBoard = {
     ChessBoard(ChessBoardSize(m, n), TreeMap(bondedPieces.toArray:_*)(new IndexOrdering(n)))
+  }
+
+  /**
+   * Create set of possible chess board consisting of one figure
+   * @param m horizontal size of chess board
+   * @param n vertical size of chess board
+   * @param figure figure on the chess board
+   * @return set of possible chess board consisting of one figure
+   */
+  def create(m: Int, n: Int, figure: ChessFigure): Set[ChessBoard] = {
+    val possibility = for {
+      i <- 1 to m
+      j <- 1 to n
+    } yield ChessBoardIndex(i, j) -> figure
+
+    possibility.map(setup => ChessBoard.create(m, n, Map(setup))).toSet
   }
 }

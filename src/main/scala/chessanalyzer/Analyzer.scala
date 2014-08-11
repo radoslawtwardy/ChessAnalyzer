@@ -6,16 +6,33 @@ import ChessFigure._
 import scala.annotation.tailrec
 import java.util.Date
 import scala.Some
+import scala.concurrent.{Await, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.Duration
 
 /**
  * Tool responsible for some chess analyzing methods
  */
 object Analyzer extends App with LazyLogging {
 
-  possibleSetups(7, 7, List(Queen, Queen, Bishop, Bishop, King, King, Knight))
+  withLogging(7, 7, List(Queen, Queen, Bishop, Bishop, King, King, Knight)) {
+    () => possibleSetups(7, 7, List(Queen, Queen, Bishop, Bishop, King, King, Knight))
+  }
 
   /**
-   * Calculate possible figure setups on the chess board.
+   * Calculate possible figure setups on the chess board sequential method
+   * Possible means that any figure is not threatening any of the other figures from the chess board.
+   * @param m horizontal size of analyzed chess boards.
+   * @param n vertical size of analyzed chess boards.
+   * @param figures figures which must standing on the chess boards. Order of this figures does not matter.
+   * @return all chess on size m x n where standing all of input figures and aby figure is not threatening any of the other figures from the chess board.
+   */
+  def possibleSetupsSequential(m: Int, n: Int, figures: List[ChessFigure]): Set[ChessBoard] = {
+    findPossibleSetups(ChessBoard.empty(m, n), figures, List.empty)
+  }
+
+  /**
+   * Calculate possible figure setups on the chess board - parallel version
    * Possible means that any figure is not threatening any of the other figures from the chess board.
    * @param m horizontal size of analyzed chess boards.
    * @param n vertical size of analyzed chess boards.
@@ -23,9 +40,31 @@ object Analyzer extends App with LazyLogging {
    * @return all chess on size m x n where standing all of input figures and aby figure is not threatening any of the other figures from the chess board.
    */
   def possibleSetups(m: Int, n: Int, figures: List[ChessFigure]): Set[ChessBoard] = {
+
+    lazy val startBoards = ChessBoard.create(m, n, figures.head)
+
+    val results = if(figures.isEmpty) {
+      //no figure - no setups
+      Set(Future(Set.empty[ChessBoard]))
+    } else if(figures.size == 1) {
+      //if recursively we working on pre-populated board (1 figure) then one figure is our edge case - we can't run recursively alg for empty board
+      Set(Future(startBoards))
+    } else {
+      //in other way we run main algorithm - pieces of solution will be wrapped in to future
+      val startFigures = figures.tail
+      startBoards.map {
+        board =>
+          Future(findPossibleSetups(board, startFigures, List.empty))
+      }
+    }
+
+    Await.result(Future.sequence(results), Duration.Inf).flatten
+  }
+
+  def withLogging(m: Int, n: Int, figures: List[ChessFigure])(job: () => Set[ChessBoard]) = {
     val st = new Date()
     logger.info("Start analyze " + m + "x" + n + " chess board with figures: " + figures.mkString(", "))
-    val result = findPossibleSetups(ChessBoard.empty(m, n), figures, List.empty)
+    val result = job()
     logger.info("Total allowed setups is: " + result.size)
     val e = new Date()
     val r = (e.getTime - st.getTime)/1000

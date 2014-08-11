@@ -4,20 +4,34 @@ import org.scalatest.{Matchers, FlatSpec}
 import chessanalyzer.model.{ChessBoardIndex, ChessBoard, ChessFigure}
 import ChessFigure._
 
+class ParallelAnalyzerTest extends AnalyzerTest {
+  def possibleSetups(m: Int, n: Int, figures: List[ChessFigure]): Set[ChessBoard] = Analyzer.withLogging(m, n, figures) {
+    () => Analyzer.possibleSetups(m, n, figures)
+  }
+}
+
+class SequentialAnalyzerTest extends AnalyzerTest {
+  def possibleSetups(m: Int, n: Int, figures: List[ChessFigure]): Set[ChessBoard] = Analyzer.withLogging(m, n, figures) {
+    () => Analyzer.possibleSetupsSequential(m, n, figures)
+  }
+}
+
 /**
  * Test suite to [[Analyzer]]
  * Checks correctness of the analyzing methods.
  */
-class AnalyzerTest extends FlatSpec with Matchers {
+abstract class AnalyzerTest extends FlatSpec with Matchers {
+
+  def possibleSetups(m: Int, n: Int, figures: List[ChessFigure]): Set[ChessBoard]
 
   "Possible chess board" should "be in the number of 1 if chess board size is 1x1, and stands of the chess board one figure" in {
-    Analyzer.possibleSetups(1, 1, List(King)) should be (Set(ChessBoard.create(1,1, Map(ChessBoardIndex(1,1) -> King))))
-    Analyzer.possibleSetups(1, 1, List(Queen)) should be (Set(ChessBoard.create(1,1, Map(ChessBoardIndex(1,1) -> Queen))))
+    possibleSetups(1, 1, List(King)) should be (Set(ChessBoard.create(1,1, Map(ChessBoardIndex(1,1) -> King))))
+    possibleSetups(1, 1, List(Queen)) should be (Set(ChessBoard.create(1,1, Map(ChessBoardIndex(1,1) -> Queen))))
   }
 
   it should "be in the number of 0 if chess board size is 1x1, and stands of the chess board two figures" in {
-    Analyzer.possibleSetups(1, 1, List(King, Queen)) should be (Set.empty)
-    Analyzer.possibleSetups(1, 1, List(King, Knight)) should be (Set.empty)
+    possibleSetups(1, 1, List(King, Queen)) should be (Set.empty)
+    possibleSetups(1, 1, List(King, Knight)) should be (Set.empty)
   }
 
   it should "be in the number of 4 if chess board size is 3x2, and stands of the chess board following figure: King, Knight" in {
@@ -50,7 +64,7 @@ class AnalyzerTest extends FlatSpec with Matchers {
       )
     }
 
-    Analyzer.possibleSetups(3, 2, List(King, Knight)) should be (Set(possibleBoard1, possibleBoard2, possibleBoard3, possibleBoard4))
+    possibleSetups(3, 2, List(King, Knight)) should be (Set(possibleBoard1, possibleBoard2, possibleBoard3, possibleBoard4))
   }
 
   it should "be in the number of 3 if chess board size is 3x3, and stands of the chess board following figure: King x 2, Rook" in {
@@ -85,7 +99,7 @@ class AnalyzerTest extends FlatSpec with Matchers {
       )
     }
 
-    Analyzer.possibleSetups(3, 3, List(King, King, Rook)) should be (Set(possibleBoard1, possibleBoard2, possibleBoard3, possibleBoard4))
+    possibleSetups(3, 3, List(King, King, Rook)) should be (Set(possibleBoard1, possibleBoard2, possibleBoard3, possibleBoard4))
 
   }
 
@@ -155,15 +169,15 @@ class AnalyzerTest extends FlatSpec with Matchers {
       )
     }
     val possibleBoards = Set(possibleBoard1, possibleBoard2, possibleBoard3, possibleBoard4, possibleBoard5, possibleBoard6, possibleBoard7, possibleBoard8)
-    Analyzer.possibleSetups(4, 4, List(Rook, Rook, Knight, Knight, Knight, Knight)) should be (possibleBoards)
+    possibleSetups(4, 4, List(Rook, Rook, Knight, Knight, Knight, Knight)) should be (possibleBoards)
   }
 
   it should "be in the number of 0 for standard layout (chess board size is 8x8, and stands of the chess board following figure: 2xKing, 2xQueen, 4xRook, 4xBishop, 4xKnight)" in {
-    Analyzer.possibleSetups(3, 3, List(Rook, Rook, Knight, Knight, Knight, Knight)) should be (Set.empty)
+    possibleSetups(3, 3, List(Rook, Rook, Knight, Knight, Knight, Knight)) should be (Set.empty)
   }
 
   it should "be in the same number independently of figure order" in {
-    Analyzer.possibleSetups(5, 5, List(King, Knight, Rook, Rook)) should be  (Analyzer.possibleSetups(5, 5, List(Rook, Knight, King, Rook)))
+    possibleSetups(5, 5, List(King, Knight, Rook, Rook)) should be  (possibleSetups(5, 5, List(Rook, Knight, King, Rook)))
   }
 
   private def buildChessBoard(m: Int, n: Int)(figureInOrder: Seq[Option[ChessFigure]]) = {
