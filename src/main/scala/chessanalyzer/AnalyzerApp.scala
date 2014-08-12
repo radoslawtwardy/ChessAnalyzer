@@ -40,7 +40,7 @@ object AnalyzerApp extends LazyLogging {
       override def run() {
         while(stillLogging) {
           Thread.sleep(10000)
-          logger.info("Calculating solution in progress..............")
+          if(stillLogging) logger.info("Calculating solution in progress..............")
         }
       }
     }
