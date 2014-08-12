@@ -48,6 +48,16 @@ case class ChessBoard private(size: ChessBoardSize, bondedPieces: SortedMap[Ches
   def removeFigureFromPiece(index: ChessBoardIndex) = {
     copy(bondedPieces = bondedPieces - index)
   }
+
+  /**
+   * String representation of chess board
+   * @return all figures with indexes
+   */
+  override def toString(): String = {
+    bondedPieces.map{
+      case (i, f) => i.toString() + " : " + f.toString()
+    }.mkString("\n")
+  }
 }
 
 object ChessBoard {

@@ -1,10 +1,7 @@
 package chessanalyzer
 
-import com.typesafe.scalalogging.LazyLogging
 import chessanalyzer.model.{ChessBoard, ChessBoardIndex, ChessFigure}
-import ChessFigure._
 import scala.annotation.tailrec
-import java.util.Date
 import scala.Some
 import scala.concurrent.{Await, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -13,11 +10,7 @@ import scala.concurrent.duration.Duration
 /**
  * Tool responsible for some chess analyzing methods
  */
-object Analyzer extends App with LazyLogging {
-
-  withLogging(7, 7, List(Queen, Queen, Bishop, Bishop, King, King, Knight)) {
-    () => possibleSetups(7, 7, List(Queen, Queen, Bishop, Bishop, King, King, Knight))
-  }
+object Analyzer {
 
   /**
    * Calculate possible figure setups on the chess board sequential method
@@ -28,7 +21,8 @@ object Analyzer extends App with LazyLogging {
    * @return all chess on size m x n where standing all of input figures and aby figure is not threatening any of the other figures from the chess board.
    */
   def possibleSetupsSequential(m: Int, n: Int, figures: List[ChessFigure]): Set[ChessBoard] = {
-    findPossibleSetups(ChessBoard.empty(m, n), figures, List.empty)
+    if(figures.isEmpty) Set.empty[ChessBoard] //no figure - no setups
+    else findPossibleSetups(ChessBoard.empty(m, n), figures, List.empty)
   }
 
   /**
@@ -61,16 +55,6 @@ object Analyzer extends App with LazyLogging {
     Await.result(Future.sequence(results), Duration.Inf).flatten
   }
 
-  def withLogging(m: Int, n: Int, figures: List[ChessFigure])(job: () => Set[ChessBoard]) = {
-    val st = new Date()
-    logger.info("Start analyze " + m + "x" + n + " chess board with figures: " + figures.mkString(", "))
-    val result = job()
-    logger.info("Total allowed setups is: " + result.size)
-    val e = new Date()
-    val r = (e.getTime - st.getTime)/1000
-    logger.info("Total time: " + r + " s")
-    result
-  }
 
   @tailrec
   private def findPossibleSetups(board: ChessBoard, figures: List[ChessFigure], previousPieces: List[(ChessBoardIndex, ChessFigure)], acc: Set[ChessBoard] = Set.empty, actualPosition: Option[ChessBoardIndex] = Some(ChessBoardIndex(1,1))): Set[ChessBoard] = {
@@ -107,6 +91,5 @@ object Analyzer extends App with LazyLogging {
       case (fig, prev, allowed, pos) =>
         sys.error("Implementation ERROR: invalid chess board.\n" + "fig: " + fig + "\n"+ "prev: " + prev + "\n"+ "allowed: " + allowed + "\n"+ "pos: " + pos + "\n")
    }
-
   }
 }

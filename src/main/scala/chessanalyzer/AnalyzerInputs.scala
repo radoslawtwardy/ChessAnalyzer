@@ -67,7 +67,7 @@ class AnalyzerInputs(input: String) {
       getFigures(KingParam, King)
   }
 
-  val parallel: Boolean = extraArgs.contains(ParallelParam) && !extraArgs.contains(SequentialParam)
+  val parallel: Boolean = extraArgs.contains(ParallelParam) || !extraArgs.contains(SequentialParam)
 
   val onlyNumber: Boolean = extraArgs.contains(OnlyNumberParam)
 

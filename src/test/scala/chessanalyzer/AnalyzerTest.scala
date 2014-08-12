@@ -5,14 +5,14 @@ import chessanalyzer.model.{ChessBoardIndex, ChessBoard, ChessFigure}
 import ChessFigure._
 
 class ParallelAnalyzerTest extends AnalyzerTest {
-  def possibleSetups(m: Int, n: Int, figures: List[ChessFigure]): Set[ChessBoard] = Analyzer.withLogging(m, n, figures) {
-    () => Analyzer.possibleSetups(m, n, figures)
+  def possibleSetups(m: Int, n: Int, figures: List[ChessFigure]): Set[ChessBoard] = AnalyzerApp.withLogging(m, n, figures, parallel = true, onlyNumber = true) {
+    Analyzer.possibleSetups(m, n, figures)
   }
 }
 
 class SequentialAnalyzerTest extends AnalyzerTest {
-  def possibleSetups(m: Int, n: Int, figures: List[ChessFigure]): Set[ChessBoard] = Analyzer.withLogging(m, n, figures) {
-    () => Analyzer.possibleSetupsSequential(m, n, figures)
+  def possibleSetups(m: Int, n: Int, figures: List[ChessFigure]): Set[ChessBoard] = AnalyzerApp.withLogging(m, n, figures, parallel = false, onlyNumber = true) {
+    Analyzer.possibleSetupsSequential(m, n, figures)
   }
 }
 

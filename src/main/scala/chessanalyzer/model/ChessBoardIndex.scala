@@ -18,4 +18,13 @@ case class ChessBoardIndex(i: Int, j: Int) {
     else if(j != size.n) Some(ChessBoardIndex(i, j + 1))
     else Some(ChessBoardIndex(i + 1, 1))
   }
+
+  /**
+  * String representation of index
+  * @return literal value of index f. ex. A1
+  */
+  override def toString(): String = {
+    // @ + 1 = A
+    ('@' + i).toChar.toString + j
+  }
 }
